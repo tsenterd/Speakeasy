@@ -1,0 +1,38 @@
+#JSGF V1.0;
+
+/**
+ * JSGF Grammar for Hello World example
+ */
+
+grammar hello;
+
+public <first> = (good|bad|god|jude)(morning|born);
+public <second> = (how|who) (much) (does)(this)(cost|lost);
+public <third> = (across)(the)(street);
+public <fourth> = (as)(soon)(as)(possible);
+public <fifth> = (good)(afternoon);
+public <sixth> = (can)(you)(do)(me)(a)(favor);
+public <seventh> = (excuse)(me);
+public <eighth> = (good)(luck);
+public <ninth> = (happy)(birthday);
+public <tenth> = (how)(are)(you);
+public <a> = (let)(me)(think)(about)(it);
+public <ad> = (thank) (you) (very) (much);
+public <ads> = (that)(looks)(great);
+public <dad> = (this)(is)(very)(difficult);
+public <cat> = (turn)(around);
+public <dog> = (what)(day)(is)(it);
+public <mom> = (what)(time)(is)(it);
+public <greet> = (open)(the)(door);
+public <random> = (i)(do)(not)(feel)(well);
+public <words> = (i)(do)(not)(understand);
+public <do> = (i)(need)(to)(go)(now);
+public <not> = (i)(would)(like)(to)(make)(a)(phone)(call);
+public <read> = (i)(will)(be)(right)(back);
+public <this> = (the)(quick)(brown)(fox)(jumped)(over)(the)(lazy)(dog);
+public <please> = (how)(much)(wood)(would)(a)(wood)(chuck)(chuck)(if)(a)(wood)(chuck)(could)(chuck)(wood);
+public <miss> = (everything)(is)(ready);
+public <d> = (please)(speak)(slower);
+public <beg> = (sorry)(to)(bother)(you);
+public <of> = (world)(wide)(web);
+public <you> = (from)(time)(to)(time);

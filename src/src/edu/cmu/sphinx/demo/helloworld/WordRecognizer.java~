@@ -1,0 +1,177 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package src.edu.cmu.sphinx.demo.helloworld;
+
+
+//
+import edu.cmu.sphinx.frontend.util.Microphone;
+import edu.cmu.sphinx.recognizer.Recognizer;
+import edu.cmu.sphinx.recognizer.Recognizer.State;
+import edu.cmu.sphinx.result.Result;
+import edu.cmu.sphinx.util.props.ConfigurationManager;
+import edu.cmu.sphinx.util.props.PropertyException;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.*;
+
+/**
+ * This class accounts for the voice recognition in the program. It uses all of the classes inside the Sphinx4 voice recognition
+ * package in order to record the phrase that the user says.
+ * 
+ * @author David Tsenter, Carnegie Mellon University
+ * @version 2.0
+/*
+ * Copyright 1999-2004 Carnegie Mellon University.
+ * Portions Copyright 2004 Sun Microsystems, Inc.
+ * Portions Copyright 2004 Mitsubishi Electric Research Laboratories.
+ * All Rights Reserved.  Use is subject to license terms.
+ *
+ * See the file "license.terms" for information on usage and
+ * redistribution of this file, and for a DISCLAIMER OF ALL
+ * WARRANTIES.
+ *
+ */
+public class WordRecognizer implements Runnable {
+    /**
+     * Used to store the text of the current sound.
+     */
+  String soundText;
+    /**
+     * Integer used to store the number of inccorect pronounciations.
+     */
+    public static int numFails;
+    /**
+     * boolean used to keep track if the input of the user was correct.
+     */
+    public static boolean correctInput;
+    private Microphone microphone;
+    private Recognizer recognizer;
+    private List<ZipListener> zipListeners = new ArrayList<ZipListener>();
+
+
+    /**
+     * Constructor - initializes configuration files, as well as starts up the microphone
+     * in order to get ready to record.
+     *
+     * @param first 
+     * @throws IOException if an error occurs while loading resources
+     */
+    public WordRecognizer(boolean first) throws IOException {
+      
+        try {
+            URL url = this.getClass().getResource("zipcity.config.xml");
+            if (url == null) {
+                throw new IOException("Can't find zipcity.config.xml");
+            }
+            ConfigurationManager cm = new ConfigurationManager(url);
+            recognizer = (Recognizer) cm.lookup("recognizer");
+            
+            microphone = (Microphone) cm.lookup("microphone");
+            }
+        
+         catch (PropertyException e) {
+            throw new IOException("Problem configuring ZipRecognizer " + e);
+        
+    }
+    }
+    /**
+     *  Thread variable used to initiate the run() method
+     */
+Thread t;
+/** Turns on the microphone and starts recognition
+ * @return true if the microphone was turned on successfuly
+ */
+    public boolean microphoneOn() {
+        if (microphone.getAudioFormat() == null) {
+            return false;
+        } else {
+            t = new Thread(this);
+            t.start();
+            return true;
+        }
+    }
+
+
+    /** Turns off the microphone, ending the current recognition in progress */
+    public void microphoneOff() {
+        microphone.stopRecording();
+    }
+
+
+    /** Allocates resources necessary for recognition.
+     * @throws IOException 
+     */
+    public void startup() throws IOException {
+        recognizer.allocate();
+    }
+
+
+    /**
+     * Shuts down the microphone, and deallocates all resources.
+     */
+    public  void shutdown() {
+        microphoneOff();
+        if (recognizer.getState() == State.ALLOCATED) {
+            recognizer.deallocate();
+        }
+    }
+
+
+    /** Performs a single recognition, and checks if the phrase said is the same as the text of the current sound file. */
+  @Override
+    public void run() {
+        microphone.clear();
+        microphone.startRecording();
+
+        Result result = recognizer.recognize();      
+        microphone.stopRecording();
+        String soundText = VoiceRecognition.soundText;
+            String resultText = result.getBestFinalResultNoFiller();
+            
+         
+                if(soundText.charAt(soundText.length()-1)==('?'))
+                {
+                    soundText = soundText.substring(0,soundText.length()-1);
+
+                }
+                System.out.println("Supposed to say: "+soundText);
+           if (resultText.equals(soundText)) {
+               
+                VoiceRecognition.dialog(true);
+               correctInput = true;
+           }
+             else
+           {
+               System.out.println(resultText);
+               VoiceRecognition.dialog(false);
+               numFails++;
+               VoiceRecognition.record.setEnabled(true);
+           }
+            
+        }
+      /**
+     * Used to add a listener to an object. This means the ability to listen to the recording and compare the result.
+     * @param zipListener A ZipListener object that needs to be listened to.
+     */
+    public synchronized void addZipListener(ZipListener zipListener) {
+        zipListeners.add(zipListener);
+    }
+    }
+
+
+  
+
+
+
+
+/** An interface for zip listeners */
+interface ZipListener {
+
+    /** Invoked when a new zip code is recognized */
+    void notify(String zipcode);
+}
+
+
