@@ -6,15 +6,15 @@ Made in conjunction with Alex Zvorygin
 
 #Screenshots
 
-Playing Field:
+###Playing Field:  
 ![Playing Field](https://raw.githubusercontent.com/tsenterd/Speakeasy/master/PlayingField.png)
 
-Instructions:
+###Instructions:  
 ![Instructions](https://raw.githubusercontent.com/tsenterd/Speakeasy/master/Instructions.png)
 
-Main Menu:
+###Main Menu:  
 ![Main Menu](https://raw.githubusercontent.com/tsenterd/Speakeasy/master/Menu.png)
 
-Speaking Prompt:
+###Speaking Prompt:  
 ![Speaking Prompt](https://raw.githubusercontent.com/tsenterd/Speakeasy/master/SpeakingPrompt.png)
 
