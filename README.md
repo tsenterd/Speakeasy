@@ -1,8 +1,12 @@
 #Speakeasy
 
-An interactive game designed to teach simple English sentences to those learning English for the first time. 
-It uses the sphinx voice API for its voice recognition capabilities.
-Made by David Tsenter (tsenterd) and Alexander Zvorygin (zvory).
+An interactive game designed to teach simple English sentences to those learning English for the first time.  
+
+It uses the sphinx voice API for its voice recognition capabilities.  
+
+Made by **David Tsenter** (tsenterd) and **Alexander Zvorygin** (zvory).  
+
+
 #Screenshots
 
 ###Playing Field:  
